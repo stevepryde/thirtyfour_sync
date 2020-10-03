@@ -31,7 +31,7 @@
 //! You can set these up using docker-compose, as follows:
 //!
 //! ```ignore
-//! docker-compose up -d --build
+//! docker-compose up -d
 //! ```
 //!
 //! The included web app demo is purely for demonstration / unit testing
