@@ -29,7 +29,7 @@ pub type WebDriver = GenericWebDriver<ReqwestDriverSync>;
 ///
 /// # Example:
 /// ```rust
-/// use thirtyfour::sync::prelude::*;
+/// use thirtyfour_sync::prelude::*;
 ///
 /// fn main() -> WebDriverResult<()> {
 ///     let caps = DesiredCapabilities::chrome();
@@ -60,7 +60,7 @@ where
     ///
     /// # Example
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// let caps = DesiredCapabilities::chrome();
     /// let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)

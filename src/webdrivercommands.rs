@@ -96,7 +96,7 @@ where
 ///
 /// For example:
 /// ```rust
-/// # use thirtyfour::sync::prelude::*;
+/// # use thirtyfour_sync::prelude::*;
 /// # fn main() -> WebDriverResult<()> {
 /// let caps = DesiredCapabilities::chrome();
 /// let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -122,7 +122,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -148,7 +148,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -165,7 +165,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -185,7 +185,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -205,7 +205,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -225,7 +225,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -248,7 +248,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -270,7 +270,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -300,7 +300,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -334,7 +334,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -369,7 +369,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -408,7 +408,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -441,7 +441,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -469,7 +469,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -489,7 +489,7 @@ pub trait WebDriverCommands {
     /// ```ignore
     /// # // Minimize is not currently working on Chrome, but does work
     /// # // on Firefox/geckodriver.
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -507,7 +507,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -529,7 +529,7 @@ pub trait WebDriverCommands {
     /// # Example:
     /// ```rust
     /// use thirtyfour::OptionRect;
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -554,7 +554,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::OptionRect;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -568,7 +568,7 @@ pub trait WebDriverCommands {
     /// You can also convert from a Rect if you want to get the window size
     /// and modify it before setting it again.
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::OptionRect;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -587,7 +587,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -607,7 +607,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -629,7 +629,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -649,7 +649,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::TimeoutConfiguration;
     /// use std::time::Duration;
     ///
@@ -679,7 +679,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::TimeoutConfiguration;
     /// use std::time::Duration;
     ///
@@ -709,7 +709,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::TimeoutConfiguration;
     /// use std::time::Duration;
     /// #
@@ -735,7 +735,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::TimeoutConfiguration;
     /// use std::time::Duration;
     /// #
@@ -761,7 +761,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// use thirtyfour::TimeoutConfiguration;
     /// use std::time::Duration;
     /// #
@@ -786,7 +786,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -814,7 +814,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -839,7 +839,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -861,7 +861,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -882,7 +882,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -904,7 +904,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -953,7 +953,7 @@ pub trait WebDriverCommands {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -990,7 +990,7 @@ pub trait WebDriverCommands {
     /// # Example
     /// ```no_run
     /// use serde::Serialize;
-    /// use thirtyfour::sync::prelude::*;
+    /// use thirtyfour_sync::prelude::*;
     /// use thirtyfour::{ExtensionCommand, RequestMethod};
     ///
     /// #[derive(Serialize)]

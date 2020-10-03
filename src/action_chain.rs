@@ -52,7 +52,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -87,7 +87,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -112,7 +112,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -133,7 +133,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -160,7 +160,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -184,7 +184,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -209,7 +209,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -230,7 +230,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -256,7 +256,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -326,7 +326,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -353,7 +353,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -378,7 +378,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -411,7 +411,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -442,7 +442,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -469,7 +469,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -500,7 +500,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -528,7 +528,7 @@ impl<'a> ActionChain<'a> {
     /// # Example:
     ///
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -569,7 +569,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -594,7 +594,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -617,7 +617,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -652,7 +652,7 @@ impl<'a> ActionChain<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();

@@ -41,7 +41,7 @@
 //! ### Example (synchronous):
 //!
 //! ```rust
-//! use thirtyfour::sync::prelude::*;
+//! use thirtyfour_sync::prelude::*;
 //!
 //! fn main() -> WebDriverResult<()> {
 //!     let caps = DesiredCapabilities::chrome();

@@ -1,6 +1,6 @@
-[![Crates.io](https://img.shields.io/crates/v/thirtyfour.svg?style=for-the-badge)](https://crates.io/crates/thirtyfour)
-[![docs.rs](https://img.shields.io/badge/docs.rs-thirtyfour-blue?style=for-the-badge)](https://docs.rs/thirtyfour)
-[![Build Status](https://img.shields.io/github/workflow/status/stevepryde/thirtyfour/build-check/main?style=for-the-badge)](https://github.com/stevepryde/thirtyfour/actions)
+[![Crates.io](https://img.shields.io/crates/v/thirtyfour_sync.svg?style=for-the-badge)](https://crates.io/crates/thirtyfour_sync)
+[![docs.rs](https://img.shields.io/badge/docs.rs-thirtyfour_sync-blue?style=for-the-badge)](https://docs.rs/thirtyfour_sync)
+[![Build Status](https://img.shields.io/github/workflow/status/stevepryde/thirtyfour_sync/build-check/main?style=for-the-badge)](https://github.com/stevepryde/thirtyfour_sync/actions)
 
 Thirtyfour is a Selenium / WebDriver library for Rust, for automated website UI testing.
 
@@ -34,7 +34,7 @@ It is named after the atomic number for the Selenium chemical element (Se).
 ## Feature Flags
 
 - `tokio-runtime`: (Default) Use the **tokio** async runtime with the [reqwest](https://docs.rs/reqwest) http client.
-- `blocking`: Enables the synchronous reqwest http client via `thirtyfour::sync::prelude::*`.
+- `blocking`: Enables the synchronous reqwest http client via `thirtyfour_sync::prelude::*`.
 
   The `blocking` flag also enables `tokio-runtime` because the
   synchronous reqwest client uses **tokio** internally.
@@ -98,7 +98,7 @@ To run this example:
     cargo run --example sync --features blocking
 
 ```rust
-use thirtyfour::sync::prelude::*;
+use thirtyfour_sync::prelude::*;
 
 fn main() -> WebDriverResult<()> {
      let caps = DesiredCapabilities::chrome();

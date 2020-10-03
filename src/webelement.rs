@@ -42,7 +42,7 @@ pub fn convert_elements_sync<'a>(
 ///
 /// # Example:
 /// ```rust
-/// # use thirtyfour::sync::prelude::*;
+/// # use thirtyfour_sync::prelude::*;
 /// #
 /// # fn main() -> WebDriverResult<()> {
 /// #     let caps = DesiredCapabilities::chrome();
@@ -57,7 +57,7 @@ pub fn convert_elements_sync<'a>(
 ///
 /// You can also search for a child element of another element as follows:
 /// ```rust
-/// # use thirtyfour::sync::prelude::*;
+/// # use thirtyfour_sync::prelude::*;
 /// #
 /// # fn main() -> WebDriverResult<()> {
 /// #     let caps = DesiredCapabilities::chrome();
@@ -110,7 +110,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -130,7 +130,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -150,7 +150,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -170,7 +170,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -197,7 +197,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -219,7 +219,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -242,7 +242,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -270,7 +270,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -296,7 +296,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -335,7 +335,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -359,7 +359,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -385,7 +385,7 @@ impl<'a> WebElement<'a> {
     /// You can specify anything that implements `Into<TypingData>`. This
     /// includes &str and String.
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -401,7 +401,7 @@ impl<'a> WebElement<'a> {
     ///
     /// You can also send special key combinations like this:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -451,7 +451,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -476,7 +476,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -498,7 +498,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #         let caps = DesiredCapabilities::chrome();
@@ -518,7 +518,7 @@ impl<'a> WebElement<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #         let caps = DesiredCapabilities::chrome();

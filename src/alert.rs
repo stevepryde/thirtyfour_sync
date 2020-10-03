@@ -28,7 +28,7 @@ impl<'a> Alert<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
@@ -51,7 +51,7 @@ impl<'a> Alert<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -73,7 +73,7 @@ impl<'a> Alert<'a> {
     ///
     /// # Example:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -97,7 +97,7 @@ impl<'a> Alert<'a> {
     /// You can specify anything that implements `Into<TypingData>`. This
     /// includes &str and String.
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
@@ -116,7 +116,7 @@ impl<'a> Alert<'a> {
     ///
     /// You can also send special key combinations like this:
     /// ```rust
-    /// # use thirtyfour::sync::prelude::*;
+    /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
     /// #     let caps = DesiredCapabilities::chrome();
