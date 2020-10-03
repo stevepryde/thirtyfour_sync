@@ -1,0 +1,32 @@
+[package]
+name = "thirtyfour_sync"
+version = "0.18.0"
+authors = ["Steve Pryde <steve@stevepryde.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = """
+Thirtyfour is a Selenium / WebDriver library for Rust, for automated website UI testing.
+
+This crate is the synchronous version only. For async, see the `thirtyfour` crate instead.
+"""
+homepage = "https://github.com/stevepryde/thirtyfour_sync"
+repository = "https://github.com/stevepryde/thirtyfour_sync"
+documentation = "https://docs.rs/thirtyfour_sync"
+
+readme = "README.md"
+keywords = ["selenium", "webdriver", "chromedriver", "geckodriver", "automation"]
+categories = ["api-bindings", "development-tools::testing", "web-programming::http-client"]
+
+[dependencies]
+thirtyfour = { version = "0.18.0", features = ["tokio-runtime"]}
+reqwest = { version = "0.10", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+log = "0.4"
+base64 = "0.12"
+
+[dev-dependencies]
+color-eyre = "0.5.6"
+
+[[example]]
+name = "sync"
