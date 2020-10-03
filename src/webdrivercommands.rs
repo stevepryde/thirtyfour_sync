@@ -1074,12 +1074,12 @@ impl<'a> ScriptRetSync<'a> {
     /// Get a single WebElement return value.
     /// Your script must return only a single element for this to work.
     pub fn get_element(&self) -> WebDriverResult<WebElement> {
-        convert_element_sync(self.driver.clone(), &self.value)
+        convert_element_sync(self.driver, &self.value)
     }
 
     /// Get a vec of WebElements from the return value.
     /// Your script must return an array of elements for this to work.
     pub fn get_elements(&self) -> WebDriverResult<Vec<WebElement>> {
-        convert_elements_sync(self.driver.clone(), &self.value)
+        convert_elements_sync(self.driver, &self.value)
     }
 }

@@ -218,7 +218,7 @@ impl<'a> SwitchTo<'a> {
         let original_handle = self.session.current_window_handle()?;
         let handles = &self.session.window_handles()?;
         for handle in handles {
-            &self.session.switch_to().window(handle)?;
+            self.session.switch_to().window(handle)?;
             let ret = &self.session.execute_script(r#"return window.name;"#)?;
             let current_name: String = ret.convert()?;
             if current_name == name {
