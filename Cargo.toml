@@ -1,6 +1,6 @@
 [package]
 name = "thirtyfour_sync"
-version = "0.18.0"
+version = "0.19.0"
 authors = ["Steve Pryde <steve@stevepryde.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -18,7 +18,7 @@ keywords = ["selenium", "webdriver", "chromedriver", "geckodriver", "automation"
 categories = ["api-bindings", "development-tools::testing", "web-programming::http-client"]
 
 [dependencies]
-thirtyfour = { version = "0.18.0", features = ["tokio-runtime"]}
+thirtyfour = { version = "0.19.0", features = ["tokio-runtime"]}
 reqwest = { version = "0.10", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
