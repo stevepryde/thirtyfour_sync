@@ -17,9 +17,17 @@ readme = "README.md"
 keywords = ["selenium", "webdriver", "chromedriver", "geckodriver", "automation"]
 categories = ["api-bindings", "development-tools::testing", "web-programming::http-client"]
 
+[features]
+default = ["reqwest-default-tls"]
+
+reqwest-default-tls = ["reqwest/default-tls"]
+reqwest-native-tls = ["reqwest/native-tls"]
+reqwest-native-tls-vendored = ["reqwest/native-tls-vendored"]
+reqwest-rustls-tls = ["reqwest/rustls-tls"]
+
 [dependencies]
 thirtyfour = { version = "0.19.0", features = ["tokio-runtime"]}
-reqwest = { version = "0.10", features = ["blocking", "json"] }
+reqwest = { version = "0.10", default-features = false, features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 log = "0.4"
