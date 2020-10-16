@@ -23,6 +23,13 @@
 //! - Alert support
 //! - Capture / Save screenshot of browser or individual element as PNG
 //!
+//! ## Cargo features
+//! There are four `reqwest-*-tls*`-features, which enable the respective features in the `reqwest` dependency:
+//! - **reqwest-default-tls** *(enabled by default)*: Provides TLS support to connect over HTTPS.
+//! - **reqwest-native-tls**: Enables TLS functionality provided by `native-tls`.
+//! - **reqwest-native-tls-vendored**: Enables the `vendored` feature of `native-tls`.
+//! - **reqwest-rustls-tls**: Enables TLS functionality provided by `rustls`.
+//!
 //! ## Examples
 //!
 //! The following example assumes you have a selenium server running
