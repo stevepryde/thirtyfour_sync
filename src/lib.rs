@@ -22,6 +22,7 @@
 //! - Shadow DOM support
 //! - Alert support
 //! - Capture / Save screenshot of browser or individual element as PNG
+//! - Chrome DevTools Protocol support
 //!
 //! ## Cargo features
 //! There are four `reqwest-*-tls*`-features, which enable the respective features in the `reqwest` dependency:
@@ -92,7 +93,7 @@ pub use thirtyfour::common::{
         firefox::FirefoxCapabilities, ie::InternetExplorerCapabilities, opera::OperaCapabilities,
         safari::SafariCapabilities,
     },
-    command::{By, ExtensionCommand, RequestMethod},
+    command::{By, ExtensionCommand},
     cookie::Cookie,
     keys::{Keys, TypingData},
     scriptargs::ScriptArgs,
@@ -130,3 +131,14 @@ mod switch_to;
 mod webdriver;
 mod webdrivercommands;
 mod webelement;
+
+/// Extensions for specific browsers.
+pub mod extensions {
+    /// Extensions for working with Chromium-based browsers.
+    pub mod chrome {
+        mod devtools;
+
+        pub use devtools::ChromeDevTools;
+        pub use thirtyfour::extensions::chrome::NetworkConditions;
+    }
+}

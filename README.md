@@ -24,6 +24,7 @@ For async, see the [thirtyfour](https://docs.rs/thirtyfour) crate instead.
 - Shadow DOM support
 - Alert support
 - Capture / Save screenshot of browser or individual element as PNG
+- Chrome DevTools Protocol support
 
 ## Why 'thirtyfour' ?
 

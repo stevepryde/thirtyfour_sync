@@ -1,10 +1,10 @@
-use crate::common::command::Command;
 use crate::common::config::WebDriverConfig;
 use crate::error::WebDriverResult;
 use crate::http::connection_sync::WebDriverHttpClientSync;
 use crate::SessionId;
 use crate::WebDriverCommands;
 use std::sync::Arc;
+use thirtyfour::common::command::FormatRequestData;
 
 #[derive(Debug)]
 pub struct WebDriverSession {
@@ -34,8 +34,11 @@ impl WebDriverSession {
         &mut self.config
     }
 
-    pub fn execute(&self, command: Command<'_>) -> WebDriverResult<serde_json::Value> {
-        self.conn.execute(&self.session_id, command)
+    pub fn execute(
+        &self,
+        request: Box<dyn FormatRequestData + Send + Sync>,
+    ) -> WebDriverResult<serde_json::Value> {
+        self.conn.execute(request.format_request(&self.session_id))
     }
 }
 

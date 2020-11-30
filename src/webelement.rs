@@ -95,13 +95,13 @@ impl<'a> WebElement<'a> {
     }
 
     ///Convenience wrapper for executing a WebDriver command.
-    fn cmd(&self, command: Command<'_>) -> WebDriverResult<serde_json::Value> {
+    fn cmd(&self, command: Command) -> WebDriverResult<serde_json::Value> {
         self.session.cmd(command)
     }
 
     /// Get the bounding rectangle for this WebElement.
     pub fn rect(&self) -> WebDriverResult<ElementRect> {
-        let v = self.cmd(Command::GetElementRect(&self.element_id))?;
+        let v = self.cmd(Command::GetElementRect(self.element_id.clone()))?;
         let r: ElementRect = serde_json::from_value((&v["value"]).clone())?;
         Ok(r)
     }
@@ -122,7 +122,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn tag_name(&self) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementTagName(&self.element_id))?;
+        let v = self.cmd(Command::GetElementTagName(self.element_id.clone()))?;
         convert_json(&v["value"])
     }
 
@@ -184,7 +184,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn text(&self) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementText(&self.element_id))?;
+        let v = self.cmd(Command::GetElementText(self.element_id.clone()))?;
         convert_json(&v["value"])
     }
 
@@ -211,7 +211,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn click(&self) -> WebDriverResult<()> {
-        self.cmd(Command::ElementClick(&self.element_id))?;
+        self.cmd(Command::ElementClick(self.element_id.clone()))?;
         Ok(())
     }
 
@@ -234,7 +234,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn clear(&self) -> WebDriverResult<()> {
-        self.cmd(Command::ElementClear(&self.element_id))?;
+        self.cmd(Command::ElementClear(self.element_id.clone()))?;
         Ok(())
     }
 
@@ -258,7 +258,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn get_property(&self, name: &str) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementProperty(&self.element_id, name.to_owned()))?;
+        let v = self.cmd(Command::GetElementProperty(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
             Ok(v["value"].to_string())
         } else {
@@ -284,7 +284,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn get_attribute(&self, name: &str) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementAttribute(&self.element_id, name.to_owned()))?;
+        let v = self.cmd(Command::GetElementAttribute(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
             Ok(v["value"].to_string())
         } else {
@@ -310,7 +310,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn get_css_property(&self, name: &str) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementCSSValue(&self.element_id, name.to_owned()))?;
+        let v = self.cmd(Command::GetElementCSSValue(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
             Ok(v["value"].to_string())
         } else {
@@ -320,13 +320,13 @@ impl<'a> WebElement<'a> {
 
     /// Return true if the WebElement is currently selected, otherwise false.
     pub fn is_selected(&self) -> WebDriverResult<bool> {
-        let v = self.cmd(Command::IsElementSelected(&self.element_id))?;
+        let v = self.cmd(Command::IsElementSelected(self.element_id.clone()))?;
         convert_json(&v["value"])
     }
 
     /// Return true if the WebElement is currently enabled, otherwise false.
     pub fn is_enabled(&self) -> WebDriverResult<bool> {
-        let v = self.cmd(Command::IsElementEnabled(&self.element_id))?;
+        let v = self.cmd(Command::IsElementEnabled(self.element_id.clone()))?;
         convert_json(&v["value"])
     }
 
@@ -350,7 +350,8 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn find_element(&self, by: By) -> WebDriverResult<WebElement> {
-        let v = self.cmd(Command::FindElementFromElement(&self.element_id, by))?;
+        let v = self
+            .cmd(Command::FindElementFromElement(self.element_id.clone(), by.get_w3c_selector()))?;
         convert_element_sync(self.session, &v["value"])
     }
 
@@ -375,7 +376,10 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn find_elements(&self, by: By) -> WebDriverResult<Vec<WebElement>> {
-        let v = self.cmd(Command::FindElementsFromElement(&self.element_id, by))?;
+        let v = self.cmd(Command::FindElementsFromElement(
+            self.element_id.clone(),
+            by.get_w3c_selector(),
+        ))?;
         convert_elements_sync(self.session, &v["value"])
     }
 
@@ -420,14 +424,14 @@ impl<'a> WebElement<'a> {
     where
         S: Into<TypingData>,
     {
-        self.cmd(Command::ElementSendKeys(&self.element_id, keys.into()))?;
+        self.cmd(Command::ElementSendKeys(self.element_id.clone(), keys.into()))?;
         Ok(())
     }
 
     /// Take a screenshot of this WebElement and return it as a base64-encoded
     /// String.
     pub fn screenshot_as_base64(&self) -> WebDriverResult<String> {
-        let v = self.cmd(Command::TakeElementScreenshot(&self.element_id))?;
+        let v = self.cmd(Command::TakeElementScreenshot(self.element_id.clone()))?;
         convert_json(&v["value"])
     }
 

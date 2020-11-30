@@ -20,7 +20,7 @@ impl<'a> Alert<'a> {
     }
 
     ///Convenience wrapper for executing a WebDriver command.
-    fn cmd(&self, command: Command<'_>) -> WebDriverResult<serde_json::Value> {
+    fn cmd(&self, command: Command) -> WebDriverResult<serde_json::Value> {
         self.session.cmd(command)
     }
 

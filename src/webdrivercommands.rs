@@ -20,6 +20,7 @@ use crate::{
     By, Cookie, OptionRect, Rect, ScriptArgs, SessionId, SwitchTo, TimeoutConfiguration,
     WebElement, WindowHandle,
 };
+use thirtyfour::common::command::FormatRequestData;
 
 pub fn start_session<C>(
     conn: Arc<dyn WebDriverHttpClientSync>,
@@ -29,7 +30,8 @@ where
     C: Serialize,
 {
     let caps = serde_json::to_value(capabilities)?;
-    let v = match conn.execute(&SessionId::null(), Command::NewSession(&caps)) {
+    let v = match conn.execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))
+    {
         Ok(x) => Ok(x),
         Err(e) => {
             // Selenium sometimes gives a bogus 500 error "Chrome failed to start".
@@ -37,7 +39,7 @@ where
             // will be returned.
             if let WebDriverError::UnknownError(x) = &e {
                 if x.status == 500 {
-                    conn.execute(&SessionId::null(), Command::NewSession(&caps))
+                    conn.execute(Command::NewSession(caps).format_request(&SessionId::null()))
                 } else {
                     Err(e)
                 }
@@ -75,7 +77,7 @@ where
         Some(Duration::new(60, 0)),
         Some(Duration::new(30, 0)),
     );
-    conn.execute(&session_id, Command::SetTimeouts(timeout_config))?;
+    conn.execute(Command::SetTimeouts(timeout_config).format_request(&session_id))?;
 
     Ok((session_id, data.capabilities))
 }
@@ -114,8 +116,8 @@ pub trait WebDriverCommands {
     /// Convenience wrapper for running WebDriver commands.
     ///
     /// For `thirtyfour` internal use only.
-    fn cmd(&self, command: Command<'_>) -> WebDriverResult<serde_json::Value> {
-        self.session().execute(command)
+    fn cmd(&self, command: Command) -> WebDriverResult<serde_json::Value> {
+        self.session().execute(Box::new(command))
     }
 
     /// Close the current window or tab.
@@ -239,7 +241,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn find_element(&self, by: By) -> WebDriverResult<WebElement> {
-        let v = self.cmd(Command::FindElement(by))?;
+        let v = self.cmd(Command::FindElement(by.get_w3c_selector()))?;
         convert_element_sync(self.session(), &v["value"])
     }
 
@@ -262,7 +264,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn find_elements(&self, by: By) -> WebDriverResult<Vec<WebElement>> {
-        let v = self.cmd(Command::FindElements(by))?;
+        let v = self.cmd(Command::FindElements(by.get_w3c_selector()))?;
         convert_elements_sync(self.session(), &v["value"])
     }
 
@@ -853,7 +855,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn get_cookie(&self, name: &str) -> WebDriverResult<Cookie> {
-        let v = self.cmd(Command::GetNamedCookie(name))?;
+        let v = self.cmd(Command::GetNamedCookie(name.to_string()))?;
         convert_json::<Cookie>(&v["value"])
     }
 
@@ -875,7 +877,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn delete_cookie(&self, name: &str) -> WebDriverResult<()> {
-        self.cmd(Command::DeleteCookie(name)).map(|_| ())
+        self.cmd(Command::DeleteCookie(name.to_string())).map(|_| ())
     }
 
     /// Delete all cookies.
@@ -1029,7 +1031,7 @@ pub trait WebDriverCommands {
     /// }
     ///
     /// ```
-    fn extension_command<T: ExtensionCommand + Send>(
+    fn extension_command<T: ExtensionCommand + Send + Sync + 'static>(
         &self,
         ext_cmd: T,
     ) -> WebDriverResult<serde_json::Value> {

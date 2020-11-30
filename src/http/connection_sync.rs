@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 
-use crate::{common::command::Command, error::WebDriverResult, SessionId};
+use crate::error::WebDriverResult;
+use thirtyfour::RequestData;
 
 /// Trait for executing HTTP requests to selenium/webdriver.
 /// As long as you have some struct that implements WebDriverHttpClientSync,
@@ -15,9 +16,5 @@ pub trait WebDriverHttpClientSync: Debug + Send + Sync {
     where
         Self: Sized;
 
-    fn execute(
-        &self,
-        session_id: &SessionId,
-        command: Command<'_>,
-    ) -> WebDriverResult<serde_json::Value>;
+    fn execute(&self, request_data: RequestData) -> WebDriverResult<serde_json::Value>;
 }

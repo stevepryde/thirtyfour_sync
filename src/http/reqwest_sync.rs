@@ -2,13 +2,10 @@ use std::fmt::Debug;
 
 use crate::http::connection_sync::WebDriverHttpClientSync;
 use crate::{
-    common::{
-        command::{Command, RequestMethod},
-        connection_common::reqwest_support::build_reqwest_headers,
-    },
+    common::connection_common::reqwest_support::build_reqwest_headers,
     error::{WebDriverError, WebDriverResult},
-    SessionId,
 };
+use thirtyfour::{RequestData, RequestMethod};
 
 /// Synchronous connection to the remote WebDriver server.
 #[derive(Debug)]
@@ -27,12 +24,7 @@ impl WebDriverHttpClientSync for ReqwestDriverSync {
     }
 
     /// Execute the specified command and return the data as serde_json::Value.
-    fn execute(
-        &self,
-        session_id: &SessionId,
-        command: Command,
-    ) -> WebDriverResult<serde_json::Value> {
-        let request_data = command.format_request(session_id);
+    fn execute(&self, request_data: RequestData) -> WebDriverResult<serde_json::Value> {
         let url = self.url.clone() + &request_data.url;
         let mut request = match request_data.method {
             RequestMethod::Get => self.client.get(&url),
