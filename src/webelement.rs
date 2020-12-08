@@ -50,7 +50,7 @@ pub fn convert_elements_sync<'a>(
 /// #     driver.get("http://webappdemo")?;
 /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
 /// let elem = driver.find_element(By::Id("input-result"))?;
-/// #     assert_eq!(elem.get_attribute("id")?, "input-result");
+/// #     assert_eq!(elem.get_attribute("id")?, Some("input-result".to_string()));
 /// #     Ok(())
 /// # }
 /// ```
@@ -137,12 +137,12 @@ impl<'a> WebElement<'a> {
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
     /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::Id("button1"))?;
-    /// let class_name = elem.class_name()?;
-    /// #     assert!(class_name.contains("pure-button"));
+    /// let class_name_option = elem.class_name()?;  // Option<String>
+    /// #     assert!(class_name_option.expect("Missing class name").contains("pure-button"));
     /// #     Ok(())
     /// # }
     /// ```
-    pub fn class_name(&self) -> WebDriverResult<String> {
+    pub fn class_name(&self) -> WebDriverResult<Option<String>> {
         self.get_attribute("class")
     }
 
@@ -157,12 +157,12 @@ impl<'a> WebElement<'a> {
     /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
     /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::Id("button1"))?;
-    /// let id = elem.id()?;
-    /// #     assert_eq!(id, "button1");
+    /// let id_option = elem.id()?;  // Option<String>
+    /// #     assert_eq!(id_option, Some("button1".to_string()));
     /// #     Ok(())
     /// # }
     /// ```
-    pub fn id(&self) -> WebDriverResult<String> {
+    pub fn id(&self) -> WebDriverResult<Option<String>> {
         self.get_attribute("id")
     }
 
@@ -188,8 +188,8 @@ impl<'a> WebElement<'a> {
         convert_json(&v["value"])
     }
 
-    /// Convenience method for getting the value attribute of this element.
-    pub fn value(&self) -> WebDriverResult<String> {
+    /// Convenience method for getting the (optional) value attribute of this element.
+    pub fn value(&self) -> WebDriverResult<Option<String>> {
         self.get_attribute("value")
     }
 
@@ -250,19 +250,22 @@ impl<'a> WebElement<'a> {
     /// #     driver.get("http://webappdemo")?;
     /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
     /// #     let elem = driver.find_element(By::Name("input2"))?;
-    /// let bool_value = elem.get_property("checked")?;
-    /// assert_eq!(bool_value, "true");
-    /// let string_value = elem.get_property("name")?;
-    /// assert_eq!(string_value, "input2");
+    /// let bool_value_option = elem.get_property("checked")?;  // Option<String>
+    /// assert_eq!(bool_value_option, Some("true".to_string()));
+    /// let string_value_option = elem.get_property("name")?;  // Option<String>
+    /// assert_eq!(string_value_option, Some("input2".to_string()));
+    /// #     assert_eq!(elem.get_property("invalid-property")?, None);
     /// #     Ok(())
     /// # }
     /// ```
-    pub fn get_property(&self, name: &str) -> WebDriverResult<String> {
+    pub fn get_property(&self, name: &str) -> WebDriverResult<Option<String>> {
         let v = self.cmd(Command::GetElementProperty(self.element_id.clone(), name.to_owned()))?;
-        if !v["value"].is_string() {
-            Ok(v["value"].to_string())
+        if v["value"].is_null() {
+            Ok(None)
+        } else if !v["value"].is_string() {
+            Ok(Some(v["value"].to_string()))
         } else {
-            convert_json(&v["value"])
+            convert_json(&v["value"]).map(Some)
         }
     }
 
@@ -278,15 +281,16 @@ impl<'a> WebElement<'a> {
     /// #     driver.get("http://webappdemo")?;
     /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
     /// #     let elem = driver.find_element(By::Name("input2"))?;
-    /// let attribute = elem.get_attribute("name")?;
-    /// assert_eq!(attribute, "input2");
+    /// let attribute_option = elem.get_attribute("name")?;  // Option<String>
+    /// assert_eq!(attribute_option, Some("input2".to_string()));
+    /// #     assert_eq!(elem.get_attribute("invalid-attribute")?, None);
     /// #     Ok(())
     /// # }
     /// ```
-    pub fn get_attribute(&self, name: &str) -> WebDriverResult<String> {
+    pub fn get_attribute(&self, name: &str) -> WebDriverResult<Option<String>> {
         let v = self.cmd(Command::GetElementAttribute(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
-            Ok(v["value"].to_string())
+            Ok(None)
         } else {
             convert_json(&v["value"])
         }
@@ -306,13 +310,14 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Name("input2"))?;
     /// let css_color = elem.get_css_property("color")?;
     /// assert_eq!(css_color, r"rgba(0, 0, 0, 1)");
+    /// #     assert_eq!(elem.get_css_property("invalid-css-property")?, "");
     /// #     Ok(())
     /// # }
     /// ```
     pub fn get_css_property(&self, name: &str) -> WebDriverResult<String> {
         let v = self.cmd(Command::GetElementCSSValue(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
-            Ok(v["value"].to_string())
+            Ok(String::new())
         } else {
             convert_json(&v["value"])
         }
@@ -398,7 +403,7 @@ impl<'a> WebElement<'a> {
     /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
     /// #     let elem = driver.find_element(By::Name("input1"))?;
     /// elem.send_keys("selenium")?;
-    /// #     assert_eq!(elem.value()?, "selenium");
+    /// #     assert_eq!(elem.value()?, Some("selenium".to_string()));
     /// #     Ok(())
     /// # }
     /// ```
@@ -416,7 +421,7 @@ impl<'a> WebElement<'a> {
     /// elem.send_keys("selenium")?;
     /// elem.send_keys(Keys::Control + "a")?;
     /// elem.send_keys(TypingData::from("thirtyfour") + Keys::Enter)?;
-    /// #     assert_eq!(elem.value()?, "thirtyfour");
+    /// #     assert_eq!(elem.value()?, Some("thirtyfour".to_string()));
     /// #     Ok(())
     /// # }
     /// ```
@@ -465,7 +470,7 @@ impl<'a> WebElement<'a> {
     /// let elem = driver.find_element(By::Name("input1"))?;
     /// elem.focus()?;
     /// #     driver.action_chain().send_keys("selenium").perform()?;
-    /// #     assert_eq!(elem.value()?, "selenium");
+    /// #     assert_eq!(elem.value()?, Some("selenium".to_string()));
     /// #     Ok(())
     /// # }
     /// ```
@@ -515,7 +520,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn inner_html(&self) -> WebDriverResult<String> {
-        self.get_property("innerHTML")
+        self.get_property("innerHTML").map(|x| x.unwrap_or_default())
     }
 
     /// Get the outerHtml property of this element.
@@ -535,7 +540,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn outer_html(&self) -> WebDriverResult<String> {
-        self.get_property("outerHTML")
+        self.get_property("outerHTML").map(|x| x.unwrap_or_default())
     }
 }
 
