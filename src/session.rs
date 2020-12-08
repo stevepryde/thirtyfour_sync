@@ -1,20 +1,21 @@
 use crate::common::config::WebDriverConfig;
-use crate::error::WebDriverResult;
+use crate::error::{WebDriverError, WebDriverResult};
 use crate::http::connection_sync::WebDriverHttpClientSync;
 use crate::SessionId;
 use crate::WebDriverCommands;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
+use std::time::Duration;
 use thirtyfour::common::command::FormatRequestData;
 
 #[derive(Debug)]
 pub struct WebDriverSession {
     session_id: SessionId,
-    conn: Arc<dyn WebDriverHttpClientSync>,
+    conn: Arc<Mutex<dyn WebDriverHttpClientSync>>,
     config: WebDriverConfig,
 }
 
 impl WebDriverSession {
-    pub fn new(session_id: SessionId, conn: Arc<dyn WebDriverHttpClientSync>) -> Self {
+    pub fn new(session_id: SessionId, conn: Arc<Mutex<dyn WebDriverHttpClientSync>>) -> Self {
         Self {
             session_id,
             conn,
@@ -38,7 +39,15 @@ impl WebDriverSession {
         &self,
         request: Box<dyn FormatRequestData + Send + Sync>,
     ) -> WebDriverResult<serde_json::Value> {
-        self.conn.execute(request.format_request(&self.session_id))
+        let conn = self.conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
+        conn.execute(request.format_request(&self.session_id))
+    }
+
+    pub fn set_request_timeout(&mut self, timeout: Duration) -> WebDriverResult<()> {
+        let mut conn =
+            self.conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
+        conn.set_request_timeout(timeout);
+        Ok(())
     }
 }
 

@@ -20,17 +20,20 @@ use crate::{
     By, Cookie, OptionRect, Rect, ScriptArgs, SessionId, SwitchTo, TimeoutConfiguration,
     WebElement, WindowHandle,
 };
+use std::sync::Mutex;
 use thirtyfour::common::command::FormatRequestData;
 
 pub fn start_session<C>(
-    conn: Arc<dyn WebDriverHttpClientSync>,
+    conn: Arc<Mutex<dyn WebDriverHttpClientSync>>,
     capabilities: C,
 ) -> WebDriverResult<(SessionId, serde_json::Value)>
 where
     C: Serialize,
 {
+    let connection = conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
     let caps = serde_json::to_value(capabilities)?;
-    let v = match conn.execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))
+    let v = match connection
+        .execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))
     {
         Ok(x) => Ok(x),
         Err(e) => {
@@ -39,7 +42,7 @@ where
             // will be returned.
             if let WebDriverError::UnknownError(x) = &e {
                 if x.status == 500 {
-                    conn.execute(Command::NewSession(caps).format_request(&SessionId::null()))
+                    connection.execute(Command::NewSession(caps).format_request(&SessionId::null()))
                 } else {
                     Err(e)
                 }
@@ -77,7 +80,7 @@ where
         Some(Duration::new(60, 0)),
         Some(Duration::new(30, 0)),
     );
-    conn.execute(Command::SetTimeouts(timeout_config).format_request(&session_id))?;
+    connection.execute(Command::SetTimeouts(timeout_config).format_request(&session_id))?;
 
     Ok((session_id, data.capabilities))
 }
@@ -679,6 +682,10 @@ pub trait WebDriverCommands {
 
     /// Set all timeouts for the current session.
     ///
+    /// NOTE: If you set timeouts to values greater than 120 seconds,
+    ///       remember to also increase the request timeout.
+    ///       See `WebDriver::set_request_timeout()` for more details.
+    ///
     /// # Example:
     /// ```rust
     /// # use thirtyfour_sync::prelude::*;
@@ -709,6 +716,10 @@ pub trait WebDriverCommands {
     /// find it more reliable to set the implicit wait time to 0 (no wait)
     /// and implement your own polling loop outside of `thirtyfour`.
     ///
+    /// NOTE: If you set any timeouts to values greater than 120 seconds,
+    ///       remember to also increase the request timeout.
+    ///       See `WebDriver::set_request_timeout()` for more details.
+    ///
     /// # Example:
     /// ```rust
     /// # use thirtyfour_sync::prelude::*;
@@ -735,6 +746,10 @@ pub trait WebDriverCommands {
     ///
     /// By default this is set to 60 seconds.
     ///
+    /// NOTE: If you set any timeouts to values greater than 120 seconds,
+    ///       remember to also increase the request timeout.
+    ///       See `WebDriver::set_request_timeout()` for more details.
+    ///
     /// # Example:
     /// ```rust
     /// # use thirtyfour_sync::prelude::*;
@@ -760,6 +775,10 @@ pub trait WebDriverCommands {
     /// for the page to finish loading.
     ///
     /// By default this is set to 60 seconds.
+    ///
+    /// NOTE: If you set any timeouts to values greater than 120 seconds,
+    ///       remember to also increase the request timeout.
+    ///       See `WebDriver::set_request_timeout()` for more details.
     ///
     /// # Example:
     /// ```rust

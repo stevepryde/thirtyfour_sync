@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 
 use crate::error::WebDriverResult;
+use std::time::Duration;
 use thirtyfour::RequestData;
 
 /// Trait for executing HTTP requests to selenium/webdriver.
@@ -15,6 +16,8 @@ pub trait WebDriverHttpClientSync: Debug + Send + Sync {
     fn create(remote_server_addr: &str) -> WebDriverResult<Self>
     where
         Self: Sized;
+
+    fn set_request_timeout(&mut self, timeout: Duration);
 
     fn execute(&self, request_data: RequestData) -> WebDriverResult<serde_json::Value>;
 }

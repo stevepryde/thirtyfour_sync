@@ -4,7 +4,7 @@
 //!
 //! Run as follows:
 //!
-//!     cargo run --example sync --features blocking
+//!     cargo run --example sync
 
 use thirtyfour_sync::prelude::*;
 

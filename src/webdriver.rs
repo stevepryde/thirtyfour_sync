@@ -1,5 +1,5 @@
 use std::marker::PhantomData;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
 use log::error;
 use serde::Serialize;
@@ -10,6 +10,7 @@ use crate::http::reqwest_sync::ReqwestDriverSync;
 use crate::webdrivercommands::{start_session, WebDriverCommands};
 use crate::WebDriverSession;
 use crate::{common::command::Command, error::WebDriverResult, DesiredCapabilities};
+use std::time::Duration;
 
 /// The WebDriver struct represents a browser session.
 ///
@@ -70,7 +71,7 @@ where
     where
         C: Serialize,
     {
-        let conn = Arc::new(T::create(remote_server_addr)?);
+        let conn = Arc::new(Mutex::new(T::create(remote_server_addr)?));
         let (session_id, session_capabilities) = start_session(conn.clone(), capabilities)?;
         let driver = GenericWebDriver {
             session: WebDriverSession::new(session_id, conn),
@@ -92,6 +93,24 @@ where
         self.cmd(Command::DeleteSession)?;
         self.quit_on_drop = false;
         Ok(())
+    }
+
+    /// Set the request timeout for the HTTP client.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// # use std::time::Duration;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// let caps = DesiredCapabilities::chrome();
+    /// let mut driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// driver.set_request_timeout(Duration::from_secs(180))?;
+    /// # Ok(())
+    /// # }
+    /// ```
+    pub fn set_request_timeout(&mut self, timeout: Duration) -> WebDriverResult<()> {
+        self.session.set_request_timeout(timeout)
     }
 }
 

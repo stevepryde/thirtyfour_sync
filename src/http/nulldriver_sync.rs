@@ -20,6 +20,8 @@ impl WebDriverHttpClientSync for NullDriverSync {
         })
     }
 
+    fn set_request_timeout(&mut self, _timeout: Duration) {}
+
     fn execute(
         &self,
         _session_id: &SessionId,

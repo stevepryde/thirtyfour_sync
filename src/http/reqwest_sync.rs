@@ -5,6 +5,7 @@ use crate::{
     common::connection_common::reqwest_support::build_reqwest_headers,
     error::{WebDriverError, WebDriverResult},
 };
+use std::time::Duration;
 use thirtyfour::{RequestData, RequestMethod};
 
 /// Synchronous connection to the remote WebDriver server.
@@ -12,6 +13,7 @@ use thirtyfour::{RequestData, RequestMethod};
 pub struct ReqwestDriverSync {
     url: String,
     client: reqwest::blocking::Client,
+    timeout: Duration,
 }
 
 impl WebDriverHttpClientSync for ReqwestDriverSync {
@@ -20,7 +22,13 @@ impl WebDriverHttpClientSync for ReqwestDriverSync {
         Ok(ReqwestDriverSync {
             url: remote_server_addr.trim_end_matches('/').to_owned(),
             client: reqwest::blocking::Client::builder().default_headers(headers).build()?,
+            timeout: Duration::from_secs(120),
         })
+    }
+
+    /// Set the HTTP client request timeout.
+    fn set_request_timeout(&mut self, timeout: Duration) {
+        self.timeout = timeout;
     }
 
     /// Execute the specified command and return the data as serde_json::Value.
@@ -31,6 +39,7 @@ impl WebDriverHttpClientSync for ReqwestDriverSync {
             RequestMethod::Post => self.client.post(&url),
             RequestMethod::Delete => self.client.delete(&url),
         };
+        request = request.timeout(self.timeout);
 
         if let Some(x) = request_data.body {
             request = request.json(&x);
