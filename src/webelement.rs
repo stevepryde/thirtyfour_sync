@@ -4,6 +4,7 @@ use base64::decode;
 use serde::ser::{Serialize, SerializeMap, Serializer};
 
 use crate::common::command::MAGIC_ELEMENTID;
+use crate::error::WebDriverError;
 use crate::webdrivercommands::WebDriverCommands;
 use crate::WebDriverSession;
 use crate::{
@@ -329,10 +330,95 @@ impl<'a> WebElement<'a> {
         convert_json(&v["value"])
     }
 
+    /// Return true if the WebElement is currently displayed, otherwise false.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
+    /// #     let elem = driver.find_element(By::Id("button1"))?;
+    /// let displayed = elem.is_displayed()?;
+    /// #     assert_eq!(displayed, true);
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub fn is_displayed(&self) -> WebDriverResult<bool> {
+        let v = self.cmd(Command::IsElementDisplayed(self.element_id.clone()))?;
+        convert_json(&v["value"])
+    }
+
     /// Return true if the WebElement is currently enabled, otherwise false.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
+    /// #     let elem = driver.find_element(By::Id("button1"))?;
+    /// let enabled = elem.is_enabled()?;
+    /// #     assert_eq!(enabled, true);
+    /// #     Ok(())
+    /// # }
+    /// ```
     pub fn is_enabled(&self) -> WebDriverResult<bool> {
         let v = self.cmd(Command::IsElementEnabled(self.element_id.clone()))?;
         convert_json(&v["value"])
+    }
+
+    /// Return true if the WebElement is currently clickable (visible and enabled),
+    /// otherwise false.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
+    /// #     let elem = driver.find_element(By::Id("button1"))?;
+    /// let clickable = elem.is_clickable()?;
+    /// #     assert_eq!(clickable, true);
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub fn is_clickable(&self) -> WebDriverResult<bool> {
+        Ok(self.is_displayed()? && self.is_enabled()?)
+    }
+
+    /// Return true if the WebElement is currently (still) present.
+    ///
+    /// NOTE: This simply queries the tag name in order to determine
+    ///       whether the element is still present.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
+    /// #     let elem = driver.find_element(By::Id("button1"))?;
+    /// let present = elem.is_present()?;
+    /// #     assert_eq!(present, true);
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub fn is_present(&self) -> WebDriverResult<bool> {
+        let present = match self.tag_name() {
+            Ok(_) => true,
+            Err(WebDriverError::NoSuchElement(_)) => false,
+            Err(e) => return Err(e),
+        };
+        Ok(present)
     }
 
     /// Search for a child element of this WebElement using the specified
