@@ -393,10 +393,18 @@ impl<'a> WebElement<'a> {
         Ok(self.is_displayed()? && self.is_enabled()?)
     }
 
-    /// Return true if the WebElement is currently (still) present.
+    /// Return true if the WebElement is currently (still) present
+    /// and not stale.
     ///
-    /// NOTE: This simply queries the tag name in order to determine
-    ///       whether the element is still present.
+    /// NOTE: This method simply queries the tag name in order to
+    ///       determine whether the element is still present.
+    ///
+    /// IMPORTANT:
+    /// If an element is re-rendered it may be considered stale even
+    /// though to the user it looks like it is still there.
+    ///
+    /// The recommended way to check for the presence of an element is
+    /// to simply search for the element again.
     ///
     /// # Example
     /// ```rust
@@ -409,13 +417,17 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Id("button1"))?;
     /// let present = elem.is_present()?;
     /// #     assert_eq!(present, true);
+    /// #     // Check negative case as well.
+    /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
+    /// #     assert_eq!(elem.is_present()?, false);
     /// #     Ok(())
     /// # }
     /// ```
     pub fn is_present(&self) -> WebDriverResult<bool> {
         let present = match self.tag_name() {
             Ok(_) => true,
-            Err(WebDriverError::NoSuchElement(_)) => false,
+            Err(WebDriverError::NoSuchElement(_))
+            | Err(WebDriverError::StaleElementReference(_)) => false,
             Err(e) => return Err(e),
         };
         Ok(present)
