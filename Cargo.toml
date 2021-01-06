@@ -1,6 +1,6 @@
 [package]
 name = "thirtyfour_sync"
-version = "0.21.2"
+version = "0.22.0"
 authors = ["Steve Pryde <steve@stevepryde.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -26,15 +26,15 @@ reqwest-native-tls-vendored = ["reqwest/native-tls-vendored"]
 reqwest-rustls-tls = ["reqwest/rustls-tls"]
 
 [dependencies]
-thirtyfour = { version = "0.21.1", features = ["tokio-runtime"]}
-reqwest = { version = "0.10", default-features = false, features = ["blocking", "json"] }
+thirtyfour = { version = "0.22.0", features = ["tokio-runtime"]}
+reqwest = { version = "0.11", default-features = false, features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 log = "0.4"
-base64 = "0.12"
+base64 = "0.13"
 
 [dev-dependencies]
-color-eyre = "0.5.6"
+color-eyre = "0.5"
 
 [[example]]
 name = "sync"
