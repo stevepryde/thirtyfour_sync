@@ -142,3 +142,9 @@ pub mod extensions {
         pub use thirtyfour::extensions::chrome::NetworkConditions;
     }
 }
+
+/// Wrappers for specific component types.
+pub mod components {
+    /// Wrapper for `<select>` elements.
+    pub mod select;
+}
