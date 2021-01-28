@@ -120,7 +120,7 @@ pub mod prelude {
     pub use thirtyfour::{By, Cookie, DesiredCapabilities, Keys, ScriptArgs, TypingData};
 }
 
-mod action_chain;
+pub mod action_chain;
 mod alert;
 pub mod http {
     pub mod connection_sync;
