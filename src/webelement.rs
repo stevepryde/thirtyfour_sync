@@ -316,7 +316,7 @@ impl<'a> WebElement<'a> {
     /// # }
     /// ```
     pub fn get_css_property(&self, name: &str) -> WebDriverResult<String> {
-        let v = self.cmd(Command::GetElementCSSValue(self.element_id.clone(), name.to_owned()))?;
+        let v = self.cmd(Command::GetElementCssValue(self.element_id.clone(), name.to_owned()))?;
         if !v["value"].is_string() {
             Ok(String::new())
         } else {
