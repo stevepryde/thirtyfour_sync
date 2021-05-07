@@ -30,7 +30,7 @@ pub fn start_session<C>(
 where
     C: Serialize,
 {
-    let connection = conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
+    let connection = conn.lock().map_err(|e| WebDriverError::RequestFailed(e.to_string()))?;
     let caps = serde_json::to_value(capabilities)?;
     let v = match connection
         .execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))

@@ -39,13 +39,13 @@ impl WebDriverSession {
         &self,
         request: Box<dyn FormatRequestData + Send + Sync>,
     ) -> WebDriverResult<serde_json::Value> {
-        let conn = self.conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
+        let conn = self.conn.lock().map_err(|e| WebDriverError::RequestFailed(e.to_string()))?;
         conn.execute(request.format_request(&self.session_id))
     }
 
     pub fn set_request_timeout(&mut self, timeout: Duration) -> WebDriverResult<()> {
         let mut conn =
-            self.conn.lock().map_err(|e| WebDriverError::UnknownResponse(e.to_string()))?;
+            self.conn.lock().map_err(|e| WebDriverError::RequestFailed(e.to_string()))?;
         conn.set_request_timeout(timeout);
         Ok(())
     }

@@ -51,8 +51,7 @@ impl WebDriverHttpClientSync for ReqwestDriverSync {
             200..=399 => Ok(resp.json()?),
             400..=599 => {
                 let status = resp.status().as_u16();
-                let body: serde_json::Value = resp.json().unwrap_or(serde_json::Value::Null);
-                Err(WebDriverError::parse(status, body))
+                Err(WebDriverError::parse(status, resp.text()?))
             }
             _ => unreachable!(),
         }
