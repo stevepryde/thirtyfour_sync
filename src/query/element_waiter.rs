@@ -20,6 +20,7 @@ use stringmatch::Needle;
 /// // Wait until the element is displayed.
 /// elem.wait_until().displayed()?;
 /// #     assert!(elem.is_displayed()?);
+/// #     driver.quit()?;
 /// #     Ok(())
 /// # }
 /// ```

@@ -76,6 +76,71 @@ fn main() -> WebDriverResult<()> {
 }
 ```
 
+### Advanced element queries
+
+#### ElementQuery
+
+The `WebDriver::query()` and `WebElement::query()` methods return an `ElementQuery` struct.
+
+Using `ElementQuery`, you can do things like:
+
+```rust
+let elem_text =
+    driver.query(By::Css("match.this")).or(By::Id("orThis")).first()?;
+```
+
+This will execute both queries once per poll iteration and return the first one that matches.
+You can also filter on one or both query branches like this:
+
+```rust
+driver.query(By::Css("branch.one")).with_text("testing")
+    .or(By::Id("branchTwo")).with_class("search").and_not_enabled()
+    .first()?;
+```
+
+The `all()` method will return an empty Vec if no elements were found.
+In order to return an error in this scenario, use the `all_required()` method instead.
+
+`ElementQuery` also allows the use of custom predicates that take a `&WebElement` argument
+and return a `WebDriverResult<bool>`.
+
+As noted above, the `query()` method is also available on `WebElement` structs as well for querying elements
+in relation to a particular element in the DOM.
+
+#### ElementWaiter
+
+The `WebElement::wait_until()` method returns an `ElementWaiter` struct.
+
+Using `ElementWaiter` you can do things like this:
+
+```rust
+elem.wait_until().displayed()?;
+// You can optionally provide a nicer error message like this.
+elem.wait_until().error("Timed out waiting for element to disappear").not_displayed()?;
+
+elem.wait_until().enabled()?;
+elem.wait_until().clickable()?;
+```
+
+And so on. See the `ElementWaiter` docs for the full list of predicates available.
+
+`ElementWaiter` also allows the use of custom predicates that take a `&WebElement` argument
+and return a `WebDriverResult<bool>`.
+
+A range of pre-defined predicates are also supplied for convenience in the
+`thirtyfour_sync::query::conditions` module.
+
+```rust
+use thirtyfour_sync::query::conditions;
+
+elem.wait_until().conditions(vec![
+    conditions::element_is_displayed(true),
+    conditions::element_is_clickable(true)
+])?;
+```
+
+These predicates (or your own) can also be supplied as filters to `ElementQuery`.
+
 ## Running the tests for `thirtyfour_sync`, including doctests
 
 You generally only need to run the tests if you plan on contributing to the development of `thirtyfour_sync`. If you just want to use the crate in your own project, you can skip this section.

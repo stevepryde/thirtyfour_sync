@@ -47,6 +47,7 @@ impl<'a> SwitchTo<'a> {
     /// elem.send_keys("selenium")?;
     /// #     let elem = driver.find_element(By::Name("input1"))?;
     /// #     assert_eq!(elem.value()?, Some("selenium".to_string()));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -78,6 +79,7 @@ impl<'a> SwitchTo<'a> {
     /// driver.switch_to().default_content()?;
     /// // We are now back in the original window.
     /// #     driver.find_element(By::Id("iframeid1"))?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -101,6 +103,7 @@ impl<'a> SwitchTo<'a> {
     /// elem.click()?;
     /// #     let elem_result = driver.find_element(By::Id("button-result"))?;
     /// #     assert_eq!(elem_result.text()?, "Button 1 clicked");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -125,6 +128,7 @@ impl<'a> SwitchTo<'a> {
     /// elem.click()?;
     /// #     let elem_result = driver.find_element(By::Id("button-result"))?;
     /// #     assert_eq!(elem_result.text()?, "Button 1 clicked");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -153,6 +157,7 @@ impl<'a> SwitchTo<'a> {
     /// driver.switch_to().parent_frame()?;
     /// // We are now back in the parent document.
     /// #     driver.find_element(By::Id("iframeid1"))?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -181,6 +186,7 @@ impl<'a> SwitchTo<'a> {
     /// #     driver.find_element(By::Id("button1"))?;
     /// #     driver.switch_to().window(&handles[0])?;
     /// #     driver.find_element(By::Name("input1"))?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -211,6 +217,7 @@ impl<'a> SwitchTo<'a> {
     /// driver.switch_to().window_name("mywindow")?;
     /// // We are now back in the original tab.
     /// assert_eq!(driver.title()?, "Demo Web App");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```

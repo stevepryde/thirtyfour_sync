@@ -37,6 +37,7 @@ pub type WebDriver = GenericWebDriver<ReqwestDriverSync>;
 ///     let caps = DesiredCapabilities::chrome();
 ///     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
 ///     driver.get("http://webappdemo")?;
+///     driver.quit()?;
 ///     Ok(())
 /// }
 /// ```
@@ -67,6 +68,7 @@ where
     /// # fn main() -> WebDriverResult<()> {
     /// let caps = DesiredCapabilities::chrome();
     /// let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -90,6 +92,7 @@ where
     /// # fn main() -> WebDriverResult<()> {
     /// let caps = DesiredCapabilities::chrome();
     /// let driver = WebDriver::new_with_timeout("http://localhost:4444/wd/hub", &caps, Some(Duration::from_secs(120)))?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -112,7 +115,7 @@ where
         let driver = GenericWebDriver {
             session: WebDriverSession::new(session_id, Arc::new(Mutex::new(conn))),
             capabilities: session_capabilities,
-            quit_on_drop: false,
+            quit_on_drop: true,
             phantom: PhantomData,
         };
 
@@ -154,7 +157,8 @@ where
     /// let caps = DesiredCapabilities::chrome();
     /// let mut driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
     /// driver.set_request_timeout(Duration::from_secs(180))?;
-    /// # Ok(())
+    /// #     driver.quit()?;
+    /// #     Ok(())
     /// # }
     /// ```
     pub fn set_request_timeout(&mut self, timeout: Duration) -> WebDriverResult<()> {

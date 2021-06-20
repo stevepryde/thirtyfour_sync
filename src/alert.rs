@@ -39,6 +39,7 @@ impl<'a> Alert<'a> {
     /// let text = alert.text()?;
     /// #     assert_eq!(text, "Alert 1 showing");
     /// #     alert.dismiss()?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -62,6 +63,7 @@ impl<'a> Alert<'a> {
     /// driver.switch_to().alert().dismiss()?;
     /// #     let elem = driver.find_element(By::Id("alert-result"))?;
     /// #     assert_eq!(elem.text()?, "Alert 2 clicked false");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -84,6 +86,7 @@ impl<'a> Alert<'a> {
     /// driver.switch_to().alert().accept()?;
     /// #     let elem = driver.find_element(By::Id("alert-result"))?;
     /// #     assert_eq!(elem.text()?, "Alert 2 clicked true");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -110,6 +113,7 @@ impl<'a> Alert<'a> {
     /// alert.accept()?;
     /// #     let elem = driver.find_element(By::Id("alert-result"))?;
     /// #     assert_eq!(elem.text()?, "selenium");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -131,6 +135,7 @@ impl<'a> Alert<'a> {
     /// #     alert.accept()?;
     /// #     let elem = driver.find_element(By::Id("alert-result"))?;
     /// #     assert_eq!(elem.text()?, "thirtyfour");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```

@@ -52,6 +52,7 @@ pub fn convert_elements_sync<'a>(
 /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
 /// let elem = driver.find_element(By::Id("input-result"))?;
 /// #     assert_eq!(elem.get_attribute("id")?, Some("input-result".to_string()));
+/// #     driver.quit()?;
 /// #     Ok(())
 /// # }
 /// ```
@@ -69,6 +70,7 @@ pub fn convert_elements_sync<'a>(
 /// #     child_elem.click()?;
 /// #     let result_elem = elem.find_element(By::Id("button-result"))?;
 /// #     assert_eq!(result_elem.text()?, "Button 1 clicked");
+/// #     driver.quit()?;
 /// #     Ok(())
 /// # }
 /// ```
@@ -119,6 +121,7 @@ impl<'a> WebElement<'a> {
     /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::Id("button1"))?;
     /// assert_eq!(elem.tag_name()?, "button");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -140,6 +143,7 @@ impl<'a> WebElement<'a> {
     /// let elem = driver.find_element(By::Id("button1"))?;
     /// let class_name_option = elem.class_name()?;  // Option<String>
     /// #     assert!(class_name_option.expect("Missing class name").contains("pure-button"));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -160,6 +164,7 @@ impl<'a> WebElement<'a> {
     /// let elem = driver.find_element(By::Id("button1"))?;
     /// let id_option = elem.id()?;  // Option<String>
     /// #     assert_eq!(id_option, Some("button1".to_string()));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -181,6 +186,7 @@ impl<'a> WebElement<'a> {
     /// let elem = driver.find_element(By::Id("button-result"))?;
     /// let text = elem.text()?;
     /// #     assert_eq!(text, "Button 1 clicked");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -208,6 +214,7 @@ impl<'a> WebElement<'a> {
     /// elem.click()?;
     /// #     let elem = driver.find_element(By::Id("button-result"))?;
     /// #     assert_eq!(elem.text()?, "Button 1 clicked");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -231,6 +238,7 @@ impl<'a> WebElement<'a> {
     /// #     elem.clear()?;
     /// # let cleared_text = elem.text()?;
     /// #     assert_eq!(cleared_text, "");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -256,6 +264,7 @@ impl<'a> WebElement<'a> {
     /// let string_value_option = elem.get_property("name")?;  // Option<String>
     /// assert_eq!(string_value_option, Some("input2".to_string()));
     /// #     assert_eq!(elem.get_property("invalid-property")?, None);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -285,6 +294,7 @@ impl<'a> WebElement<'a> {
     /// let attribute_option = elem.get_attribute("name")?;  // Option<String>
     /// assert_eq!(attribute_option, Some("input2".to_string()));
     /// #     assert_eq!(elem.get_attribute("invalid-attribute")?, None);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -312,6 +322,7 @@ impl<'a> WebElement<'a> {
     /// let css_color = elem.get_css_property("color")?;
     /// assert_eq!(css_color, r"rgba(0, 0, 0, 1)");
     /// #     assert_eq!(elem.get_css_property("invalid-css-property")?, "");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -343,6 +354,7 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Id("button1"))?;
     /// let displayed = elem.is_displayed()?;
     /// #     assert_eq!(displayed, true);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -364,6 +376,7 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Id("button1"))?;
     /// let enabled = elem.is_enabled()?;
     /// #     assert_eq!(enabled, true);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -386,6 +399,7 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Id("button1"))?;
     /// let clickable = elem.is_clickable()?;
     /// #     assert_eq!(clickable, true);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -420,6 +434,7 @@ impl<'a> WebElement<'a> {
     /// #     // Check negative case as well.
     /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
     /// #     assert_eq!(elem.is_present()?, false);
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -449,6 +464,7 @@ impl<'a> WebElement<'a> {
     /// #     child_elem.click()?;
     /// #     let result_elem = elem.find_element(By::Id("button-result"))?;
     /// #     assert_eq!(result_elem.text()?, "Button 1 clicked");
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -475,6 +491,7 @@ impl<'a> WebElement<'a> {
     /// for child_elem in child_elems {
     ///     assert_eq!(child_elem.tag_name()?, "button");
     /// }
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -502,6 +519,7 @@ impl<'a> WebElement<'a> {
     /// #     let elem = driver.find_element(By::Name("input1"))?;
     /// elem.send_keys("selenium")?;
     /// #     assert_eq!(elem.value()?, Some("selenium".to_string()));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -520,6 +538,7 @@ impl<'a> WebElement<'a> {
     /// elem.send_keys(Keys::Control + "a")?;
     /// elem.send_keys(TypingData::from("thirtyfour") + Keys::Enter)?;
     /// #     assert_eq!(elem.value()?, Some("thirtyfour".to_string()));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -569,6 +588,7 @@ impl<'a> WebElement<'a> {
     /// elem.focus()?;
     /// #     driver.action_chain().send_keys("selenium").perform()?;
     /// #     assert_eq!(elem.value()?, Some("selenium".to_string()));
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -591,6 +611,7 @@ impl<'a> WebElement<'a> {
     /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::Id("button1"))?;
     /// elem.scroll_into_view()?;
+    /// #     driver.quit()?;
     /// #     Ok(())
     /// # }
     /// ```
@@ -608,13 +629,14 @@ impl<'a> WebElement<'a> {
     /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
-    /// #         let caps = DesiredCapabilities::chrome();
-    /// #         let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
-    /// #         driver.get("http://webappdemo")?;
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::XPath(r##"//*[@id="button1"]/.."##))?;
     /// let html = elem.inner_html()?;
-    /// #         assert_eq!(html, r##"<button class="pure-button pure-button-primary" id="button1">BUTTON 1</button>"##);
-    /// #         Ok(())
+    /// #     assert_eq!(html, r##"<button class="pure-button pure-button-primary" id="button1">BUTTON 1</button>"##);
+    /// #     driver.quit()?;
+    /// #     Ok(())
     /// # }
     /// ```
     pub fn inner_html(&self) -> WebDriverResult<String> {
@@ -628,13 +650,14 @@ impl<'a> WebElement<'a> {
     /// # use thirtyfour_sync::prelude::*;
     /// #
     /// # fn main() -> WebDriverResult<()> {
-    /// #         let caps = DesiredCapabilities::chrome();
-    /// #         let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
-    /// #         driver.get("http://webappdemo")?;
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
     /// let elem = driver.find_element(By::XPath(r##"//*[@id="button1"]/.."##))?;
     /// let html = elem.outer_html()?;
-    /// #         assert_eq!(html, r##"<div class="pure-u-1-6"><button class="pure-button pure-button-primary" id="button1">BUTTON 1</button></div>"##);
-    /// #         Ok(())
+    /// #     assert_eq!(html, r##"<div class="pure-u-1-6"><button class="pure-button pure-button-primary" id="button1">BUTTON 1</button></div>"##);
+    /// #     driver.quit()?;
+    /// #     Ok(())
     /// # }
     /// ```
     pub fn outer_html(&self) -> WebDriverResult<String> {
