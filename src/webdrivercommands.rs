@@ -1,4 +1,4 @@
-use std::{fs::File, io::Write, path::Path, sync::Arc, time::Duration};
+use std::{fs::File, io::Write, path::Path, time::Duration};
 
 use base64::decode;
 use serde::de::DeserializeOwned;
@@ -20,20 +20,17 @@ use crate::{
     By, Cookie, OptionRect, Rect, ScriptArgs, SessionId, SwitchTo, TimeoutConfiguration,
     WebElement, WindowHandle,
 };
-use std::sync::Mutex;
 use thirtyfour::common::command::FormatRequestData;
 
 pub fn start_session<C>(
-    conn: Arc<Mutex<dyn WebDriverHttpClientSync>>,
+    conn: &dyn WebDriverHttpClientSync,
     capabilities: C,
 ) -> WebDriverResult<(SessionId, serde_json::Value)>
 where
     C: Serialize,
 {
-    let connection = conn.lock().map_err(|e| WebDriverError::RequestFailed(e.to_string()))?;
     let caps = serde_json::to_value(capabilities)?;
-    let v = match connection
-        .execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))
+    let v = match conn.execute(Command::NewSession(caps.clone()).format_request(&SessionId::null()))
     {
         Ok(x) => Ok(x),
         Err(e) => {
@@ -42,7 +39,7 @@ where
             // will be returned.
             if let WebDriverError::UnknownError(x) = &e {
                 if x.status == 500 {
-                    connection.execute(Command::NewSession(caps).format_request(&SessionId::null()))
+                    conn.execute(Command::NewSession(caps).format_request(&SessionId::null()))
                 } else {
                     Err(e)
                 }
@@ -62,7 +59,7 @@ where
 
     #[derive(Debug, Deserialize)]
     struct ConnectionResp {
-        #[serde(default)]
+        #[serde(default, rename(deserialize = "sessionId"))]
         session_id: String,
         value: ConnectionData,
     }
@@ -75,12 +72,9 @@ where
         resp.session_id
     });
     // Set default timeouts.
-    let timeout_config = TimeoutConfiguration::new(
-        Some(Duration::new(60, 0)),
-        Some(Duration::new(60, 0)),
-        Some(Duration::new(30, 0)),
-    );
-    connection.execute(Command::SetTimeouts(timeout_config).format_request(&session_id))?;
+    conn.execute(
+        Command::SetTimeouts(TimeoutConfiguration::default()).format_request(&session_id),
+    )?;
 
     Ok((session_id, data.capabilities))
 }

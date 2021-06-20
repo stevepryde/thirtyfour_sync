@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 
-use crate::http::connection_sync::WebDriverHttpClientSync;
+use crate::http::connection_sync::{HttpClientCreateParams, WebDriverHttpClientSync};
 use crate::{
     common::connection_common::reqwest_support::build_reqwest_headers,
     error::{WebDriverError, WebDriverResult},
@@ -17,12 +17,13 @@ pub struct ReqwestDriverSync {
 }
 
 impl WebDriverHttpClientSync for ReqwestDriverSync {
-    fn create(remote_server_addr: &str) -> WebDriverResult<Self> {
-        let headers = build_reqwest_headers(remote_server_addr)?;
+    fn create(params: HttpClientCreateParams) -> WebDriverResult<Self> {
+        let url = params.server_url.trim_end_matches('/').to_owned();
+        let headers = build_reqwest_headers(&url)?;
         Ok(ReqwestDriverSync {
-            url: remote_server_addr.trim_end_matches('/').to_owned(),
+            url,
             client: reqwest::blocking::Client::builder().default_headers(headers).build()?,
-            timeout: Duration::from_secs(120),
+            timeout: params.timeout.unwrap_or_else(|| Duration::from_secs(120)),
         })
     }
 

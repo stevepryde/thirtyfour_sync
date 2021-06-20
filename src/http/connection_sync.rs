@@ -4,6 +4,12 @@ use crate::error::WebDriverResult;
 use std::time::Duration;
 use thirtyfour::RequestData;
 
+#[derive(Debug, Clone)]
+pub struct HttpClientCreateParams {
+    pub server_url: String,
+    pub timeout: Option<Duration>,
+}
+
 /// Trait for executing HTTP requests to selenium/webdriver.
 /// As long as you have some struct that implements WebDriverHttpClientSync,
 /// you can turn it into a WebDriver like this:
@@ -13,7 +19,7 @@ use thirtyfour::RequestData;
 /// pub type MyWebDriver = GenericWebDriver<MyHttpClient>;
 /// ```
 pub trait WebDriverHttpClientSync: Debug + Send + Sync {
-    fn create(remote_server_addr: &str) -> WebDriverResult<Self>
+    fn create(params: HttpClientCreateParams) -> WebDriverResult<Self>
     where
         Self: Sized;
 

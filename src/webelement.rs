@@ -79,7 +79,7 @@ pub fn convert_elements_sync<'a>(
 #[derive(Debug, Clone)]
 pub struct WebElement<'a> {
     pub element_id: ElementId,
-    session: &'a WebDriverSession,
+    pub session: &'a WebDriverSession,
 }
 
 impl<'a> WebElement<'a> {

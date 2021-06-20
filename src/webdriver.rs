@@ -5,11 +5,12 @@ use log::error;
 use serde::Serialize;
 use serde_json::Value;
 
-use crate::http::connection_sync::WebDriverHttpClientSync;
+use crate::common::config::WebDriverConfig;
+use crate::http::connection_sync::{HttpClientCreateParams, WebDriverHttpClientSync};
 use crate::http::reqwest_sync::ReqwestDriverSync;
 use crate::webdrivercommands::{start_session, WebDriverCommands};
-use crate::WebDriverSession;
 use crate::{common::command::Command, error::WebDriverResult, DesiredCapabilities};
+use crate::{SessionId, WebDriverSession};
 use std::time::Duration;
 
 /// The WebDriver struct represents a browser session.
@@ -63,20 +64,55 @@ where
     /// ```rust
     /// # use thirtyfour_sync::prelude::*;
     /// #
+    /// # fn main() -> WebDriverResult<()> {
     /// let caps = DesiredCapabilities::chrome();
-    /// let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)
-    ///     .expect("Error starting browser");
+    /// let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     Ok(())
+    /// # }
     /// ```
-    pub fn new<C>(remote_server_addr: &str, capabilities: C) -> WebDriverResult<Self>
+    pub fn new<C>(server_url: &str, capabilities: C) -> WebDriverResult<Self>
     where
         C: Serialize,
     {
-        let conn = Arc::new(Mutex::new(T::create(remote_server_addr)?));
-        let (session_id, session_capabilities) = start_session(conn.clone(), capabilities)?;
+        Self::new_with_timeout(server_url, capabilities, None)
+    }
+
+    /// Creates a new GenericWebDriver just like the `new` function. Allows a
+    /// configurable timeout for all HTTP requests including the session creation.
+    ///
+    /// Create a new WebDriver as follows:
+    ///
+    /// # Example
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// # use std::time::Duration;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// let caps = DesiredCapabilities::chrome();
+    /// let driver = WebDriver::new_with_timeout("http://localhost:4444/wd/hub", &caps, Some(Duration::from_secs(120)))?;
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub fn new_with_timeout<C>(
+        server_url: &str,
+        capabilities: C,
+        timeout: Option<Duration>,
+    ) -> WebDriverResult<Self>
+    where
+        C: Serialize,
+    {
+        let params = HttpClientCreateParams {
+            server_url: server_url.to_string(),
+            timeout,
+        };
+        let conn = T::create(params)?;
+
+        let (session_id, session_capabilities) = start_session(&conn, capabilities)?;
+
         let driver = GenericWebDriver {
-            session: WebDriverSession::new(session_id, conn),
+            session: WebDriverSession::new(session_id, Arc::new(Mutex::new(conn))),
             capabilities: session_capabilities,
-            quit_on_drop: true,
+            quit_on_drop: false,
             phantom: PhantomData,
         };
 
@@ -86,6 +122,18 @@ where
     /// Return a clone of the capabilities as returned by Selenium.
     pub fn capabilities(&self) -> DesiredCapabilities {
         DesiredCapabilities::new(self.capabilities.clone())
+    }
+
+    pub fn session_id(&self) -> &SessionId {
+        self.session.session_id()
+    }
+
+    pub fn config(&self) -> &WebDriverConfig {
+        self.session.config()
+    }
+
+    pub fn config_mut(&mut self) -> &mut WebDriverConfig {
+        self.session.config_mut()
     }
 
     /// End the webdriver session.

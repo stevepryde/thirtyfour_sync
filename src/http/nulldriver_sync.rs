@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 
-use crate::http::connection_sync::WebDriverHttpClientSync;
+use crate::http::connection_sync::{HttpClientCreateParams, WebDriverHttpClientSync};
 use crate::{
     common::command::{Command, RequestMethod},
     error::{WebDriverError, WebDriverResult},
@@ -14,9 +14,9 @@ pub struct NullDriverSync {
 }
 
 impl WebDriverHttpClientSync for NullDriverSync {
-    fn create(remote_server_addr: &str) -> WebDriverResult<Self> {
+    fn create(params: HttpClientCreateParams) -> WebDriverResult<Self> {
         Ok(NullDriverSync {
-            url: remote_server_addr.to_string(),
+            url: params.server_url.to_string(),
         })
     }
 

@@ -113,6 +113,7 @@ pub use webelement::WebElement;
 pub mod prelude {
     pub use crate::alert::Alert;
     pub use crate::error::WebDriverResult;
+    pub use crate::query::{ElementQueryable, ElementWaitable};
     pub use crate::switch_to::SwitchTo;
     pub use crate::webdriver::WebDriver;
     pub use crate::webdrivercommands::{ScriptRetSync, WebDriverCommands};
@@ -148,3 +149,6 @@ pub mod components {
     /// Wrapper for `<select>` elements.
     pub mod select;
 }
+
+// ElementQuery and ElementWaiter interfaces.
+pub mod query;
