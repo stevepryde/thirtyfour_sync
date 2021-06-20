@@ -82,7 +82,7 @@ impl<'a> ElementSelector<'a> {
         mut elements: Vec<WebElement<'b>>,
     ) -> WebDriverResult<Vec<WebElement<'b>>> {
         for func in &self.filters {
-            let tmp_elements = mem::replace(&mut elements, Vec::new());
+            let tmp_elements = std::mem::take(&mut elements);
             for element in tmp_elements {
                 if func(&element)? {
                     elements.push(element);
