@@ -71,6 +71,9 @@ fn main() -> WebDriverResult<()> {
      // Look for header to implicitly wait for the page to load.
      driver.find_element(By::ClassName("firstHeading"))?;
      assert_eq!(driver.title()?, "Selenium - Wikipedia");
+    
+     // Close the browser.
+     driver.quit()?;
 
      Ok(())
 }

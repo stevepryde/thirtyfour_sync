@@ -78,6 +78,9 @@
 //!     let elem_result = driver.find_element(By::Id("input-result"))?;
 //!     assert_eq!(elem_result.text()?, "selenium");
 //!
+//!     // Close the browser.
+//!     driver.quit()?;
+//!
 //!     Ok(())
 //! }
 //! ```
