@@ -223,8 +223,19 @@ impl<'a> ElementQuery<'a> {
         Ok(elements.is_empty())
     }
 
+    /// Return the first WebElement that matches any selector (including all of
+    /// the filters for that selector).
+    ///
+    /// Returns None if no elements match.
+    pub fn first_opt(&self) -> WebDriverResult<Option<WebElement<'a>>> {
+        let elements = self.run_poller(false)?;
+        Ok(elements.into_iter().next())
+    }
+
     /// Return only the first WebElement that matches any selector (including all of
     /// the filters for that selector).
+    ///
+    /// Returns Err(WebDriverError::NoSuchElement) if no elements match.
     pub fn first(&self) -> WebDriverResult<WebElement<'a>> {
         let mut elements = self.run_poller(false)?;
 

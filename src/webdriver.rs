@@ -72,11 +72,14 @@ where
     /// #     Ok(())
     /// # }
     /// ```
+    ///
+    /// **NOTE:** If the webdriver appears to hang or give no response, please check that the
+    ///     capabilities object is of the correct type for that webdriver.
     pub fn new<C>(server_url: &str, capabilities: C) -> WebDriverResult<Self>
     where
         C: Serialize,
     {
-        Self::new_with_timeout(server_url, capabilities, None)
+        Self::new_with_timeout(server_url, capabilities, Some(Duration::from_secs(120)))
     }
 
     /// Creates a new GenericWebDriver just like the `new` function. Allows a

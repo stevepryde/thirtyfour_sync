@@ -1086,6 +1086,58 @@ pub trait WebDriverCommands {
 
         Ok(response["value"].clone())
     }
+
+    /// Execute the specified function in a new browser tab, closing the tab when complete.
+    /// The return value will be that of the supplied function, unless an error occurs while
+    /// opening or closing the tab.
+    ///
+    /// ```rust
+    /// # use thirtyfour_sync::prelude::*;
+    /// #
+    /// # fn main() -> WebDriverResult<()> {
+    /// #     let caps = DesiredCapabilities::chrome();
+    /// #     let driver = WebDriver::new("http://localhost:4444/wd/hub", &caps)?;
+    /// #     driver.get("http://webappdemo")?;
+    /// #     driver.find_element(By::Id("pagetextinput"))?.click()?;
+    /// #     assert_eq!(driver.title()?, "Demo Web App");
+    /// #     // Get the current window handle.
+    /// #     let handle = driver.current_window_handle()?;
+    /// let window_title = driver.in_new_tab(|| {
+    ///     driver.get("https://www.google.com")?;
+    ///     driver.title()
+    /// })?;
+    /// #     assert_eq!(window_title, "Google");
+    /// #     assert_eq!(driver.current_window_handle()?, handle);
+    /// #     driver.quit()?;
+    /// #     Ok(())
+    /// # }
+    /// ```
+    fn in_new_tab<F, T>(&self, f: F) -> WebDriverResult<T>
+    where
+        F: FnOnce() -> WebDriverResult<T>,
+    {
+        let existing_handles = self.window_handles()?;
+        let handle = self.current_window_handle()?;
+
+        // Open new tab.
+        self.execute_script(r#"window.open("about:blank", target="_blank");"#)?;
+        let mut new_handles = self.window_handles()?;
+        new_handles.retain(|h| !existing_handles.contains(h));
+        if new_handles.len() != 1 {
+            return Err(WebDriverError::NotFound(
+                "new tab".to_string(),
+                "Unable to find window handle for new tab".to_string(),
+            ));
+        }
+        self.switch_to().window(&new_handles[0])?;
+        let result = f();
+
+        // Close tab.
+        self.execute_script(r#"window.close();"#)?;
+        self.switch_to().window(&handle)?;
+
+        result
+    }
 }
 
 /// Helper struct for getting return values from scripts.
