@@ -53,6 +53,6 @@ impl WebDriverSession {
 
 impl WebDriverCommands for WebDriverSession {
     fn session(&self) -> &WebDriverSession {
-        &self
+        self
     }
 }

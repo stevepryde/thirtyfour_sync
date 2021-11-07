@@ -214,7 +214,7 @@ where
     Box::new(move |elem| {
         let desired_attributes = desired_attributes.clone();
         for (attribute_name, value) in &desired_attributes {
-            match elem.get_attribute(&attribute_name) {
+            match elem.get_attribute(attribute_name) {
                 Ok(Some(x)) => {
                     if !value.is_match(&x) {
                         return Ok(false);
@@ -243,7 +243,7 @@ where
     Box::new(move |elem| {
         let desired_attributes = desired_attributes.clone();
         for (attribute_name, value) in &desired_attributes {
-            match elem.get_attribute(&attribute_name) {
+            match elem.get_attribute(attribute_name) {
                 Ok(Some(x)) => {
                     if value.is_match(&x) {
                         return Ok(false);
