@@ -244,7 +244,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn find_element(&self, by: By) -> WebDriverResult<WebElement> {
-        let v = self.cmd(Command::FindElement(by.get_w3c_selector()))?;
+        let v = self.cmd(Command::FindElement(by.into()))?;
         convert_element_sync(self.session(), &v["value"])
     }
 
@@ -268,7 +268,7 @@ pub trait WebDriverCommands {
     /// # }
     /// ```
     fn find_elements(&self, by: By) -> WebDriverResult<Vec<WebElement>> {
-        let v = self.cmd(Command::FindElements(by.get_w3c_selector()))?;
+        let v = self.cmd(Command::FindElements(by.into()))?;
         convert_elements_sync(self.session(), &v["value"])
     }
 

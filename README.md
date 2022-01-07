@@ -9,6 +9,14 @@ It supports the full W3C WebDriver spec. Tested with Chrome and Firefox although
 This crate provides a synchronous (i.e. not async) interface for `thirtyfour`.
 For async, see the [thirtyfour](https://docs.rs/thirtyfour) crate instead.
 
+# Status: Looking for maintainer
+![maintenance-status](https://img.shields.io/badge/maintenance-looking--for--maintainer-orange.svg)
+
+Upcoming changes to the `thirtyfour` project will cause it to diverge from this
+synchronous version. As such this project will no longer be actively maintained.
+Apologies for any inconvenience. If you need more information or if you're
+interested in taking over this project, please get in touch.
+
 ## Features
 
 - All W3C WebDriver and WebElement methods supported

@@ -1,6 +1,6 @@
 [package]
 name = "thirtyfour_sync"
-version = "0.27.0"
+version = "0.27.1"
 authors = ["Steve Pryde <steve@stevepryde.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -16,6 +16,9 @@ documentation = "https://docs.rs/thirtyfour_sync"
 readme = "README.md"
 keywords = ["selenium", "webdriver", "chromedriver", "geckodriver", "automation"]
 categories = ["api-bindings", "development-tools::testing", "web-programming::http-client"]
+
+[badges]
+maintenance = { status = "looking-for-maintainer" }
 
 [features]
 default = ["reqwest-default-tls"]
